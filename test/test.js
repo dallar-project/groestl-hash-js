@@ -8,6 +8,7 @@ var empty = '';
 var dish = 'Groestl is an Austrian dish, usually made of leftover potatoes and pork, cut into slice.';
 var longDream = 'Take this kiss upon the brow! And, in parting from you now, Thus much let me avow-- You are not wrong, who deem That my days have been a dream; Yet if hope has flown away In a night, or in a day, In a vision, or in none, Is it therefore the less gone? All that we see or seem Is but a dream within a dream. I stand amid the roar Of a surf-tormented shore, And I hold within my hand Grains of the golden sand-- How few! yet how they creep Through my fingers to the deep, While I weep--while I weep! O God! can I not grasp Them with a tighter clasp? O God! can I not save One from the pitiless wave? Is all that we see or seem But a dream within a dream?';
 var int32 = [-1245000620, -1578223460, 654805539, -1068884769, -968029107, -8582190, 491541657, 290156804, 1046922525, 1254877013, -1307320917, 1691597203, 55068107, 1715389297, 252729336, 127805489];
+const data = new Buffer('000000200575284918d6b86f9ad09b584ecd29ebf5b72f1803e902a1515e9412000000006eaee2676b03d7ed1868415c6662863986e1999e49e3af5135083fc1a92b7b7779fa4a5ae333251c185d5086', 'hex');
 
 describe("groestl Hash Functions", function() {
   
@@ -38,6 +39,15 @@ describe("groestl Hash Functions", function() {
   describe("double", function() {
     it("dish string", function() {
       expect(x11.groestl_2(dish)).to.equal("55415989225c5c902f5003679a98fac117555890a7c3119ab1d570c89e77b072");
+    });
+  });
+
+  describe("triple", function() {
+    it("data to hex", function() {
+      expect(x11.groestl_3([...data], 1)).to.equal("d02572e4e0117da83f68c2ca843257d3104eadf368b5ffc184940d1900000000");
+    });
+    it("data to buffer to hex", function() {
+      expect(Buffer.from(x11.groestl_3([...data], 1, 1)).toString('hex')).to.equal("d02572e4e0117da83f68c2ca843257d3104eadf368b5ffc184940d1900000000");
     });
   });
 });
